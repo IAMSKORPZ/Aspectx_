@@ -597,6 +597,65 @@
     .inv-grid { grid-template-columns: repeat(4, 1fr); }
   }
 
+  /* STAR UPGRADE SYSTEM */
+  .star-badge {
+    display: inline-flex; align-items: center; gap: 2px;
+    font-size: 11px;
+    color: var(--neon-gold);
+    text-shadow: 0 0 6px var(--neon-gold);
+    font-weight: 700;
+    letter-spacing: 0px;
+  }
+  .star-badge.s1 { color: #aaa; text-shadow: none; }
+  .star-badge.s2 { color: #4af; text-shadow: 0 0 5px #4af; }
+  .star-badge.s3 { color: #a0f; text-shadow: 0 0 5px #a0f; }
+  .star-badge.s4 { color: #fa0; text-shadow: 0 0 5px #fa0; }
+  .star-badge.s5 { color: #f80; text-shadow: 0 0 8px #f80; }
+  .star-badge.s6 { color: #f44; text-shadow: 0 0 10px #f44; }
+  .star-badge.s7 { color: #fff; text-shadow: 0 0 12px #fff, 0 0 20px #0ff; animation: star7-pulse 1.5s ease-in-out infinite; }
+  @keyframes star7-pulse {
+    0%,100% { text-shadow: 0 0 10px #fff, 0 0 20px #0ff; }
+    50% { text-shadow: 0 0 20px #fff, 0 0 40px #0ff, 0 0 60px #a0f; }
+  }
+  .upgrade-screen { max-width: 520px; margin: 0 auto; }
+  .upgrade-char-card {
+    background: var(--panel);
+    border: 1px solid var(--border-bright);
+    border-radius: 14px;
+    padding: 16px;
+    margin-bottom: 12px;
+    display: flex; gap: 14px; align-items: flex-start;
+  }
+  .upgrade-char-card .uc-img { width: 64px; height: 64px; border-radius: 10px; object-fit: cover; object-position: top; border: 2px solid var(--border-bright); flex-shrink: 0; }
+  .upgrade-char-card .uc-emoji { font-size: 42px; flex-shrink: 0; }
+  .upgrade-info { flex: 1; }
+  .upgrade-name { font-size: 15px; font-weight: 700; color: var(--text-bright); }
+  .upgrade-stat-row { font-size: 11px; color: var(--text-dim); margin: 2px 0; }
+  .upgrade-stat-row span { color: var(--neon-cyan); font-weight: 700; }
+  .star-req-box {
+    background: rgba(255,170,0,0.07);
+    border: 1px solid rgba(255,170,0,0.25);
+    border-radius: 10px;
+    padding: 12px;
+    margin-bottom: 10px;
+  }
+  .star-req-title { font-size: 12px; font-weight: 700; color: var(--neon-gold); margin-bottom: 8px; letter-spacing: 1px; }
+  .star-req-row { display: flex; justify-content: space-between; align-items: center; font-size: 12px; margin-bottom: 4px; }
+  .star-req-row .label { color: var(--text-dim); }
+  .star-req-row .val { color: var(--text-bright); font-weight: 700; }
+  .star-req-row .val.ok { color: var(--neon-green); }
+  .star-req-row .val.bad { color: var(--neon-red); }
+  .dup-count-tag { 
+    font-size: 10px; 
+    color: var(--neon-cyan); 
+    background: rgba(80,160,255,0.1); 
+    border: 1px solid rgba(80,160,255,0.3); 
+    border-radius: 4px; 
+    padding: 1px 5px; 
+    margin-left: 4px;
+    font-weight: 700;
+  }
+
   .char-avatar-img {
     width: 48px;
     height: 48px;
@@ -612,6 +671,235 @@
   .prison-card .char-avatar-img { width: 56px; height: 56px; border-radius: 10px; }
   .result-img { width: 80px; height: 80px; border-radius: 12px; object-fit: cover; object-position: top; border: 2px solid var(--border-bright); }
 
+
+  /* TUTORIAL OVERLAY */
+  #tutorial-overlay {
+    display: none;
+    position: fixed; inset: 0; z-index: 500;
+    background: rgba(3,5,14,0.97);
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    backdrop-filter: blur(8px);
+  }
+  #tutorial-overlay.show { display: flex; }
+  .tut-card {
+    background: var(--panel);
+    border: 1px solid var(--border-bright);
+    border-radius: 18px;
+    padding: 24px 20px 20px;
+    max-width: 460px;
+    width: 100%;
+    position: relative;
+    animation: result-in 0.4s ease;
+  }
+  .tut-header {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 14px;
+    font-weight: 900;
+    color: var(--neon-cyan);
+    text-shadow: 0 0 12px var(--neon-cyan);
+    letter-spacing: 2px;
+    margin-bottom: 6px;
+    text-align: center;
+  }
+  .tut-step-indicator {
+    text-align: center;
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 1px;
+    margin-bottom: 16px;
+  }
+  .tut-icon {
+    font-size: 52px;
+    text-align: center;
+    margin-bottom: 14px;
+    display: block;
+    filter: drop-shadow(0 0 12px rgba(80,160,255,0.5));
+  }
+  .tut-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text-bright);
+    text-align: center;
+    margin-bottom: 12px;
+  }
+  .tut-body {
+    font-size: 13px;
+    color: var(--text);
+    line-height: 1.8;
+    text-align: left;
+  }
+  .tut-body b { color: var(--neon-cyan); }
+  .tut-body .highlight {
+    display: block;
+    background: rgba(80,160,255,0.08);
+    border-left: 3px solid var(--neon-blue);
+    border-radius: 0 8px 8px 0;
+    padding: 8px 12px;
+    margin: 8px 0;
+    font-size: 12px;
+    color: var(--text-dim);
+  }
+  .tut-body .tip {
+    display: block;
+    background: rgba(255,170,0,0.08);
+    border-left: 3px solid var(--neon-gold);
+    border-radius: 0 8px 8px 0;
+    padding: 8px 12px;
+    margin: 8px 0;
+    font-size: 12px;
+    color: var(--neon-gold);
+  }
+  .tut-progress {
+    display: flex; gap: 6px; justify-content: center;
+    margin: 18px 0 14px;
+  }
+  .tut-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: rgba(80,160,255,0.2);
+    border: 1px solid rgba(80,160,255,0.3);
+    transition: all 0.3s;
+  }
+  .tut-dot.active {
+    background: var(--neon-cyan);
+    box-shadow: 0 0 8px var(--neon-cyan);
+    width: 22px; border-radius: 4px;
+  }
+  .tut-dot.done {
+    background: rgba(80,160,255,0.5);
+  }
+  .tut-nav {
+    display: flex; gap: 10px;
+  }
+
+
+  /* ── TRAITS ─────────────────────────────── */
+  .trait-overlay {
+    display: none; position: fixed; inset: 0; z-index: 400;
+    background: rgba(3,5,14,0.97); backdrop-filter: blur(10px);
+    flex-direction: column; align-items: center; overflow-y: auto; padding: 56px 12px 24px;
+  }
+  .trait-overlay.show { display: flex; }
+  .trait-modal {
+    background: var(--panel); border: 1px solid var(--border-bright);
+    border-radius: 18px; padding: 18px; width: 100%; max-width: 520px;
+    animation: result-in 0.35s ease;
+  }
+  .trait-modal-header {
+    font-family: 'Orbitron', sans-serif; font-size: 14px; font-weight: 900;
+    color: var(--neon-cyan); text-shadow: 0 0 12px var(--neon-cyan);
+    letter-spacing: 2px; text-align: center; margin-bottom: 14px;
+  }
+  .trait-main-row {
+    display: grid; grid-template-columns: 56px 1fr 56px; gap: 10px;
+    align-items: start; margin-bottom: 14px;
+  }
+  .trait-pick-btn {
+    width: 54px; height: 54px; border-radius: 12px;
+    background: rgba(80,160,255,0.1); border: 2px dashed rgba(80,160,255,0.4);
+    color: var(--neon-blue); font-size: 26px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.18s; flex-shrink: 0;
+  }
+  .trait-pick-btn:hover { background: rgba(80,160,255,0.2); border-color: var(--neon-cyan); }
+  .trait-pick-btn.has-char { border-style: solid; border-color: var(--neon-blue); padding: 2px; }
+  .trait-pick-btn img { width: 100%; height: 100%; object-fit: cover; object-position: top; border-radius: 8px; }
+  .trait-center { display: flex; flex-direction: column; gap: 8px; }
+  .trait-current-box {
+    background: rgba(10,15,35,0.9); border: 1px solid var(--border);
+    border-radius: 10px; padding: 10px; min-height: 54px;
+    display: flex; align-items: center; justify-content: center; text-align: center;
+  }
+  .trait-name-display {
+    font-family: 'Orbitron', sans-serif; font-size: 13px; font-weight: 900;
+  }
+  .trait-stat-display { font-size: 11px; color: var(--text-dim); margin-top: 3px; }
+  .trait-roll-btn {
+    background: linear-gradient(135deg, #5a1a8a, #2a0a5a);
+    border: 1px solid var(--neon-purple); color: var(--neon-purple);
+    border-radius: 8px; padding: 9px; font-family: 'Rajdhani',sans-serif;
+    font-size: 13px; font-weight: 700; letter-spacing: 1px; cursor: pointer;
+    transition: all 0.18s; text-align: center;
+  }
+  .trait-roll-btn:hover { box-shadow: 0 0 20px rgba(160,0,255,0.4); }
+  .trait-roll-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+  .trait-cost-note { font-size: 10px; color: var(--text-dim); text-align: center; }
+  .trait-convert-row {
+    display: flex; gap: 8px; align-items: center; justify-content: center;
+    margin-bottom: 10px; flex-wrap: wrap;
+  }
+  .trait-pity-row {
+    background: rgba(80,160,255,0.05); border: 1px solid var(--border);
+    border-radius: 10px; padding: 10px; margin-bottom: 12px; font-size: 11px;
+  }
+  .trait-pity-title { color: var(--neon-cyan); font-weight: 700; margin-bottom: 6px; font-size: 11px; letter-spacing: 1px; }
+  .tpity-row { display: flex; justify-content: space-between; margin-bottom: 3px; }
+  .tpity-row .label { color: var(--text-dim); }
+  .tpity-row .val { color: var(--text-bright); font-weight: 700; }
+  .trait-bottom-btns { display: flex; gap: 8px; }
+  /* char picker inside trait modal */
+  .trait-char-picker {
+    display: none; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(3,5,14,0.99); border-radius: 18px;
+    flex-direction: column; padding: 16px; z-index: 10; overflow-y: auto;
+  }
+  .trait-char-picker.show { display: flex; }
+  .trait-picker-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 10px;
+  }
+  .trait-picker-card {
+    background: rgba(10,15,35,0.9); border: 1px solid var(--border);
+    border-radius: 10px; padding: 8px; cursor: pointer; text-align: center;
+    transition: all 0.15s; display: flex; flex-direction: column; align-items: center; gap: 4px;
+  }
+  .trait-picker-card:hover { border-color: var(--neon-blue); background: rgba(80,160,255,0.1); }
+  .trait-picker-card.selected { border-color: var(--neon-gold); background: rgba(255,170,0,0.08); }
+  /* trait index */
+  .trait-index-overlay {
+    display: none; position: fixed; inset: 0; z-index: 600;
+    background: rgba(3,5,14,0.98); backdrop-filter: blur(10px);
+    flex-direction: column; align-items: center; overflow-y: auto; padding: 56px 12px 24px;
+  }
+  .trait-index-overlay.show { display: flex; }
+  .trait-index-card {
+    background: rgba(10,15,35,0.85); border: 1px solid var(--border);
+    border-radius: 12px; padding: 12px; margin-bottom: 8px; width: 100%; max-width: 480px;
+  }
+  .trait-index-name { font-weight: 700; font-size: 14px; }
+  .trait-index-stats { font-size: 11px; color: var(--neon-cyan); margin: 2px 0; }
+  .trait-index-rate { font-size: 10px; color: var(--text-dim); }
+  /* rarity colors for traits */
+  .tr-common { color: #aaa; }
+  .tr-uncommon { color: #4af; }
+  .tr-rare { color: #a0f; }
+  .tr-epic { color: #fa0; }
+  .tr-legendary { color: #f80; }
+  .tr-mythic { color: #f44; }
+  .tr-beyond { color: #fff; text-shadow: 0 0 8px #0ff; }
+  /* filter overlay */
+  .trait-filter-overlay {
+    display: none; position: fixed; inset: 0; z-index: 700;
+    background: rgba(3,5,14,0.98); backdrop-filter: blur(10px);
+    flex-direction: column; align-items: center; overflow-y: auto; padding: 56px 12px 24px;
+  }
+  .trait-filter-overlay.show { display: flex; }
+  .trait-filter-item {
+    background: rgba(10,15,35,0.85); border: 1px solid var(--border);
+    border-radius: 10px; padding: 12px; margin-bottom: 8px; width: 100%; max-width: 480px;
+    display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  }
+  .trait-filter-item .warn-toggle {
+    background: none; border: 1px solid var(--border); border-radius: 6px;
+    color: var(--text-dim); padding: 4px 10px; cursor: pointer; font-size: 12px;
+    font-family: 'Rajdhani',sans-serif; font-weight: 700; transition: all 0.15s; white-space: nowrap;
+  }
+  .trait-filter-item .warn-toggle.active {
+    border-color: var(--neon-gold); color: var(--neon-gold); background: rgba(255,170,0,0.1);
+  }
+
 </style>
 </head>
 <body>
@@ -626,6 +914,7 @@
   <div class="tb-item"><span class="icon">🎰</span><span class="val" id="tb-pulls">0</span></div>
   <div class="tb-item"><span class="icon">⭐</span><span class="val" id="tb-sp">0</span></div>
   <div class="tb-item"><span class="icon">✨</span><span class="val" id="tb-bp">0</span></div>
+  <div class="tb-item"><span class="icon">🎭</span><span class="val" id="tb-traits">0</span></div>
 </div>
 
 <!-- PRISON REALM OVERLAY -->
@@ -636,6 +925,20 @@
   </div>
   <div id="prison-cards-grid" style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;max-width:520px;width:100%;padding:0 10px;"></div>
   <button class="btn btn-primary" id="prison-collect-btn" onclick="closePrisonOverlay()" style="margin-top:16px;">COLLECT ALL</button>
+</div>
+
+<!-- TUTORIAL OVERLAY -->
+<div id="tutorial-overlay">
+  <div class="tut-card">
+    <div class="tut-header">📖 CURSED REALM — TUTORIAL</div>
+    <div class="tut-step-indicator" id="tut-step-indicator">Step 1 of 6</div>
+    <div id="tut-content"></div>
+    <div class="tut-progress" id="tut-progress"></div>
+    <div class="tut-nav">
+      <button class="btn btn-primary" id="tut-back-btn" onclick="tutNav(-1)" style="flex:1;">← Back</button>
+      <button class="btn btn-gold" id="tut-next-btn" onclick="tutNav(1)" style="flex:2;">Next →</button>
+    </div>
+  </div>
 </div>
 
 <!-- SCREENS -->
@@ -673,6 +976,12 @@
     </div>
     <div class="menu-btn" onclick="showScreen('admin')">
       <span class="mb-icon">🔐</span><span class="mb-label">Admin</span>
+    </div>
+    <div class="menu-btn" onclick="showScreen('upgrade')">
+      <span class="mb-icon">⭐</span><span class="mb-label">Upgrade</span>
+    </div>
+    <div class="menu-btn" onclick="openTraitMenu()">
+      <span class="mb-icon">🎭</span><span class="mb-label">Traits</span>
     </div>
   </div>
   <div style="text-align:center;margin-top:20px;font-size:11px;color:var(--text-dim);">
@@ -865,7 +1174,32 @@
   <div id="shop-result" style="text-align:center;min-height:50px;padding:10px;font-size:14px;"></div>
 </div>
 
-<!-- ADMIN -->
+<!-- STAR UPGRADE SCREEN -->
+<div class="screen" id="screen-upgrade">
+  <div class="upgrade-screen">
+    <div class="screen-header">
+      <span class="back-btn" onclick="showScreen('menu')">← Back</span>
+      <h2>⭐ STAR UPGRADE</h2>
+    </div>
+    <div class="panel" style="margin-bottom:10px;">
+      <div class="panel-title">HOW IT WORKS</div>
+      <div style="font-size:11px;color:var(--text-dim);line-height:1.7;">
+        Upgrading stars requires <b style="color:var(--neon-gold)">duplicate pulls</b> of the same character + gold.<br>
+        Each star boosts ATK, DEF, and SPD permanently.<br>
+        <span style="color:var(--neon-cyan)">★1</span> 1 dup + 2.5k &nbsp;
+        <span style="color:var(--neon-cyan)">★2</span> 2 dups + 5k &nbsp;
+        <span style="color:var(--neon-cyan)">★3</span> 3 dups + 10k &nbsp;
+        <span style="color:var(--neon-cyan)">★4</span> 4 dups + 20k<br>
+        <span style="color:var(--neon-cyan)">★5</span> 5 dups + 40k &nbsp;
+        <span style="color:var(--neon-cyan)">★6</span> 6 dups + 75k &nbsp;
+        <span style="color:var(--neon-cyan)">★7</span> 7 dups + 150k
+      </div>
+    </div>
+    <div id="upgrade-roster-list"></div>
+  </div>
+</div>
+
+
 <div class="screen" id="screen-admin">
   <div class="screen-header">
     <span class="back-btn" onclick="showScreen('menu')">← Back</span>
@@ -936,10 +1270,110 @@
       </div>
       <div id="admin-item-result" style="font-size:12px;text-align:center;margin-top:8px;min-height:20px;color:var(--neon-green);"></div>
       <hr class="divider">
+      <div class="panel-title" style="margin-top:8px;">TRAITS</div>
+      <div class="admin-field">
+        <div class="admin-label">Trait Tokens 🎭</div>
+        <input type="number" class="admin-input" id="adm-traits">
+      </div>
+      <button class="btn btn-gold btn-sm btn-full" style="margin-top:6px;" onclick="adminSaveTraits()">💾 Set Trait Tokens</button>
+      <button class="btn btn-primary btn-sm btn-full" style="margin-top:6px;" onclick="openTraitMenu()">🎭 Open Traits Menu</button>
+      <div id="admin-trait-result" style="font-size:12px;text-align:center;margin-top:6px;min-height:14px;color:var(--neon-green);"></div>
+      <hr class="divider">
+      <div class="panel-title" style="margin-top:8px;">TUTORIAL</div>
+      <button class="btn btn-primary btn-full" onclick="startTutorial(true)">📖 Replay Tutorial</button>
+      <div id="admin-tutorial-result" style="font-size:12px;text-align:center;margin-top:6px;min-height:16px;color:var(--neon-cyan);"></div>
+      <hr class="divider">
       <div class="panel-title" style="margin-top:8px;color:var(--neon-red);">DANGER ZONE</div>
       <button class="btn btn-danger btn-full" onclick="adminResetAll()">🗑️ RESET ALL PROGRESS</button>
       <div id="admin-reset-result" style="font-size:12px;text-align:center;margin-top:8px;min-height:20px;color:var(--neon-red);"></div>
     </div>
+  </div>
+</div>
+
+
+<!-- TRAITS OVERLAY -->
+<div id="trait-overlay" class="trait-overlay">
+  <div class="trait-modal" style="position:relative; overflow:hidden;">
+    <div class="trait-modal-header">🎭 TRAITS</div>
+
+    <!-- char picker sub-panel -->
+    <div id="trait-char-picker" class="trait-char-picker">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+        <span style="font-family:'Orbitron',sans-serif;font-size:12px;color:var(--neon-cyan);flex:1;">SELECT CHARACTER</span>
+        <button class="btn btn-primary btn-sm" onclick="closeCharPicker()">✕ Cancel</button>
+      </div>
+      <div class="trait-picker-grid" id="trait-picker-grid"></div>
+    </div>
+
+    <div class="trait-main-row">
+      <!-- LEFT: char pick -->
+      <div>
+        <div class="trait-pick-btn" id="trait-char-btn" onclick="openCharPicker()">
+          <span id="trait-char-icon">＋</span>
+        </div>
+        <div style="font-size:9px;color:var(--text-dim);text-align:center;margin-top:3px;" id="trait-char-name-label">Pick char</div>
+      </div>
+      <!-- CENTER -->
+      <div class="trait-center">
+        <div class="trait-current-box" id="trait-current-box">
+          <div style="color:var(--text-dim);font-size:11px;">Select a character<br>to see their trait</div>
+        </div>
+        <button class="trait-roll-btn" id="trait-reroll-btn" onclick="doTraitReroll()" disabled>🎲 REROLL TRAIT — 1🎭</button>
+        <div class="trait-cost-note" id="trait-roll-cost-note">Select a character first</div>
+      </div>
+      <!-- RIGHT: traits count -->
+      <div style="display:flex;flex-direction:column;align-items:center;gap:4px;">
+        <div style="font-size:22px;font-weight:900;color:var(--neon-gold);font-family:'Orbitron',sans-serif;" id="trait-tokens-display">0</div>
+        <div style="font-size:9px;color:var(--text-dim);text-align:center;">Trait<br>Tokens</div>
+      </div>
+    </div>
+
+    <!-- Pity bars -->
+    <div class="trait-pity-row">
+      <div class="trait-pity-title">PITY TRACKER</div>
+      <div class="tpity-row"><span class="label">Dragonborn</span><span class="val" id="tp-dragonborn">0 / 100</span></div>
+      <div class="tpity-row"><span class="label">Framed</span><span class="val" id="tp-framed">0 / 300</span></div>
+      <div class="tpity-row"><span class="label">Above</span><span class="val" id="tp-above">0 / 500</span></div>
+      <div class="tpity-row"><span class="label">Slayer</span><span class="val" id="tp-slayer">0 / 650</span></div>
+      <div class="tpity-row"><span class="label">Beyond</span><span class="val" id="tp-beyond-trait">0 / 1000</span></div>
+    </div>
+
+    <!-- Gold convert -->
+    <div class="trait-convert-row">
+      <button class="btn btn-gold btn-sm" onclick="convertGoldToTraits(1)">💰 5k → 1🎭</button>
+      <button class="btn btn-gold btn-sm" onclick="convertGoldToTraits(10)">💰 50k → 10🎭</button>
+      <button class="btn btn-gold btn-sm" onclick="convertGoldToTraits(100)">💰 500k → 100🎭</button>
+    </div>
+    <div id="trait-convert-msg" style="font-size:11px;text-align:center;min-height:14px;color:var(--neon-green);margin-bottom:8px;"></div>
+
+    <div class="trait-bottom-btns">
+      <button class="btn btn-primary btn-sm" style="flex:1;" onclick="openTraitIndex()">📋 Index</button>
+      <button class="btn btn-primary btn-sm" style="flex:1;" onclick="openTraitFilter()">⚠️ Filter</button>
+      <button class="btn btn-primary btn-sm" style="flex:1;" onclick="closeTraitMenu()">← Back</button>
+    </div>
+  </div>
+</div>
+
+<!-- TRAIT INDEX OVERLAY -->
+<div id="trait-index-overlay" class="trait-index-overlay">
+  <div style="width:100%;max-width:480px;">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
+      <div style="font-family:'Orbitron',sans-serif;font-size:13px;font-weight:900;color:var(--neon-cyan);flex:1;">📋 TRAIT INDEX</div>
+      <button class="btn btn-primary btn-sm" onclick="closeTraitIndex()">✕ Close</button>
+    </div>
+    <div id="trait-index-list"></div>
+  </div>
+</div>
+
+<!-- TRAIT FILTER OVERLAY -->
+<div id="trait-filter-overlay" class="trait-filter-overlay">
+  <div style="width:100%;max-width:480px;">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+      <div style="font-family:'Orbitron',sans-serif;font-size:13px;font-weight:900;color:var(--neon-cyan);flex:1;">⚠️ WARN FILTER</div>
+      <button class="btn btn-primary btn-sm" onclick="closeTraitFilter()">✕ Close</button>
+    </div>
+    <div style="font-size:11px;color:var(--text-dim);margin-bottom:12px;">Toggle warnings for traits you don't want to accidentally reroll over.</div>
+    <div id="trait-filter-list"></div>
   </div>
 </div>
 
@@ -948,6 +1382,59 @@
 // GAME STATE
 // ============================================================
 const ADMIN_CODE = 'AXTR6YXTZ@T6&ZT^%tY';
+
+// ============================================================
+// STAR UPGRADE SYSTEM
+// ============================================================
+const STAR_REQS = [
+  null, // 0 stars (base)
+  { dups: 1, gold: 2500,  atkBonus: 0.08, defBonus: 0.08, spdBonus: 0.05 }, // ★1
+  { dups: 2, gold: 5000,  atkBonus: 0.08, defBonus: 0.08, spdBonus: 0.05 }, // ★2
+  { dups: 3, gold: 10000, atkBonus: 0.10, defBonus: 0.10, spdBonus: 0.07 }, // ★3
+  { dups: 4, gold: 20000, atkBonus: 0.10, defBonus: 0.10, spdBonus: 0.07 }, // ★4
+  { dups: 5, gold: 40000, atkBonus: 0.12, defBonus: 0.12, spdBonus: 0.10 }, // ★5
+  { dups: 6, gold: 75000, atkBonus: 0.15, defBonus: 0.15, spdBonus: 0.12 }, // ★6
+  { dups: 7, gold: 150000,atkBonus: 0.20, defBonus: 0.20, spdBonus: 0.15 }, // ★7
+];
+
+function getStarLabel(stars) {
+  if (!stars || stars === 0) return '';
+  return '★'.repeat(stars);
+}
+
+function getStarClass(stars) {
+  return stars ? `s${stars}` : 's0';
+}
+
+function getCharStars(charId) {
+  return (G.charStars && G.charStars[charId]) || 0;
+}
+
+function getCharDups(charId) {
+  return (G.charDups && G.charDups[charId]) || 0;
+}
+
+// Compute stats with star bonuses applied
+function getStarStats(charId) {
+  const base = CHAR_DEFS[charId];
+  if (!base) return null;
+  const stars = getCharStars(charId);
+  let atkMult = 1, defMult = 1, spdMult = 1;
+  for (let s = 1; s <= stars; s++) {
+    const req = STAR_REQS[s];
+    atkMult += req.atkBonus;
+    defMult += req.defBonus;
+    spdMult += req.spdBonus;
+  }
+  return {
+    atk: Math.round(base.atk * atkMult),
+    def: Math.round(base.def * defMult),
+    spd: Math.round(base.spd * spdMult),
+    hp: base.hp,
+  };
+}
+
+
 
 let G = {
   gold: 500,
@@ -971,6 +1458,12 @@ let G = {
   rushChapterView: 1,
   raidHp: 500,
   chars: {}, // char data keyed by id
+  charStars: {}, // charId -> star level (0-7)
+  charDups: {}, // charId -> duplicate count
+  traitTokens: 0, // trait reroll currency
+  charTraits: {}, // charId -> trait name
+  traitPity: { dragonborn:0, framed:0, above:0, slayer:0, beyond:0 },
+  traitWarnList: [], // trait names to warn about
 };
 
 const CHAR_IMAGES = {
@@ -1199,6 +1692,12 @@ function saveGame() {
       raidHpLimitless: G.raidHpLimitless||600,
       team: G.team,
       roster: G.roster,
+      charStars: G.charStars || {},
+      charDups: G.charDups || {},
+      traitTokens: G.traitTokens || 0,
+      charTraits: G.charTraits || {},
+      traitPity: G.traitPity || { dragonborn:0, framed:0, above:0, slayer:0, beyond:0 },
+      traitWarnList: G.traitWarnList || [],
       storyChapter: G.storyChapter,
       storyEpisode: G.storyEpisode,
       storyCompleted: G.storyCompleted,
@@ -1215,6 +1714,391 @@ function loadGame() {
     const s = JSON.parse(raw);
     Object.assign(G, s);
   } catch(e){}
+}
+
+// ============================================================
+// TRAITS SYSTEM
+// ============================================================
+const TRAITS = [
+  { name:'Strength',   atkBonus:5,  defBonus:0,  spdBonus:0,  weight:20.0, rarity:'common'   },
+  { name:'Speed',      atkBonus:0,  defBonus:0,  spdBonus:5,  weight:20.0, rarity:'common'   },
+  { name:'Tank',       atkBonus:0,  defBonus:5,  spdBonus:0,  weight:20.0, rarity:'common'   },
+  { name:'Speedster',  atkBonus:0,  defBonus:0,  spdBonus:12, weight:20.0, rarity:'uncommon' },
+  { name:'Big Guy',    atkBonus:10, defBonus:0,  spdBonus:0,  weight:7.0,  rarity:'rare'     },
+  { name:'Curse',      atkBonus:5,  defBonus:10, spdBonus:0,  weight:5.0,  rarity:'rare'     },
+  { name:'Godlike',    atkBonus:10, defBonus:0,  spdBonus:5,  weight:5.0,  rarity:'epic'     },
+  { name:'Dragonborn', atkBonus:20, defBonus:0,  spdBonus:0,  weight:1.0,  rarity:'legendary'},
+  { name:'Framed',     atkBonus:10, defBonus:0,  spdBonus:20, weight:0.3,  rarity:'mythic'   },
+  { name:'Above',      atkBonus:0,  defBonus:40, spdBonus:0,  weight:0.3,  rarity:'mythic'   },
+  { name:'Slayer',     atkBonus:40, defBonus:0,  spdBonus:0,  weight:0.3,  rarity:'mythic'   },
+  { name:'Beyond',     atkBonus:30, defBonus:30, spdBonus:30, weight:0.1,  rarity:'beyond'   },
+];
+const TRAIT_TOTAL_WEIGHT = TRAITS.reduce((a,b)=>a+b.weight,0);
+
+const TRAIT_PITY_LIMITS = { dragonborn:100, framed:300, above:500, slayer:650, beyond:1000 };
+
+let traitSelectedChar = null;
+
+function getTraitRarityClass(rarity) {
+  const map = { common:'tr-common', uncommon:'tr-uncommon', rare:'tr-rare', epic:'tr-epic', legendary:'tr-legendary', mythic:'tr-mythic', beyond:'tr-beyond' };
+  return map[rarity] || 'tr-common';
+}
+
+function getTraitStatText(t) {
+  const parts = [];
+  if (t.atkBonus) parts.push('+' + t.atkBonus + ' ATK');
+  if (t.defBonus) parts.push('+' + t.defBonus + ' DEF');
+  if (t.spdBonus) parts.push('+' + t.spdBonus + ' SPD');
+  return parts.join(' · ');
+}
+
+function rollTrait() {
+  if (!G.traitPity) G.traitPity = { dragonborn:0, framed:0, above:0, slayer:0, beyond:0 };
+  const p = G.traitPity;
+
+  // Check pities (highest first)
+  if (p.beyond   >= TRAIT_PITY_LIMITS.beyond)   { p.beyond=0; p.slayer=0; p.above=0; p.framed=0; p.dragonborn=0; return TRAITS.find(t=>t.name==='Beyond'); }
+  if (p.slayer   >= TRAIT_PITY_LIMITS.slayer)   { p.slayer=0; return TRAITS.find(t=>t.name==='Slayer'); }
+  if (p.above    >= TRAIT_PITY_LIMITS.above)    { p.above=0;  return TRAITS.find(t=>t.name==='Above'); }
+  if (p.framed   >= TRAIT_PITY_LIMITS.framed)   { p.framed=0; return TRAITS.find(t=>t.name==='Framed'); }
+  if (p.dragonborn >= TRAIT_PITY_LIMITS.dragonborn) { p.dragonborn=0; return TRAITS.find(t=>t.name==='Dragonborn'); }
+
+  let r = Math.random() * TRAIT_TOTAL_WEIGHT;
+  let picked = TRAITS[0];
+  for (const t of TRAITS) {
+    r -= t.weight;
+    if (r <= 0) { picked = t; break; }
+  }
+
+  // Increment pity for rarities not obtained
+  const rarePities = ['dragonborn','framed','above','slayer','beyond'];
+  rarePities.forEach(k => { p[k] = (p[k]||0) + 1; });
+  // If we got one, reset its pity
+  const pickedKey = picked.name.toLowerCase();
+  if (p[pickedKey] !== undefined) p[pickedKey] = 0;
+
+  return picked;
+}
+
+function openTraitMenu() {
+  if (!G.traitPity) G.traitPity = { dragonborn:0, framed:0, above:0, slayer:0, beyond:0 };
+  if (!G.charTraits) G.charTraits = {};
+  if (!G.traitWarnList) G.traitWarnList = [];
+  traitSelectedChar = null;
+  document.getElementById('trait-overlay').classList.add('show');
+  renderTraitMenu();
+}
+
+function closeTraitMenu() {
+  document.getElementById('trait-overlay').classList.remove('show');
+}
+
+function renderTraitMenu() {
+  // tokens display
+  document.getElementById('trait-tokens-display').textContent = G.traitTokens || 0;
+  // pity
+  const p = G.traitPity || {};
+  document.getElementById('tp-dragonborn').textContent   = (p.dragonborn||0) + ' / 100';
+  document.getElementById('tp-framed').textContent       = (p.framed||0)     + ' / 300';
+  document.getElementById('tp-above').textContent        = (p.above||0)      + ' / 500';
+  document.getElementById('tp-slayer').textContent       = (p.slayer||0)     + ' / 650';
+  document.getElementById('tp-beyond-trait').textContent = (p.beyond||0)     + ' / 1000';
+
+  const hasChar = !!traitSelectedChar;
+  document.getElementById('trait-reroll-btn').disabled = !hasChar || (G.traitTokens || 0) < 1;
+
+  // char button
+  const btn = document.getElementById('trait-char-btn');
+  const label = document.getElementById('trait-char-name-label');
+  if (traitSelectedChar) {
+    const def = CHAR_DEFS[traitSelectedChar];
+    if (CHAR_IMAGES[traitSelectedChar]) {
+      btn.innerHTML = '<img src="' + CHAR_IMAGES[traitSelectedChar] + '">';
+    } else {
+      btn.innerHTML = '<span style="font-size:22px">' + def.emoji + '</span>';
+    }
+    btn.className = 'trait-pick-btn has-char';
+    label.textContent = def.name.split(' ')[0];
+    // show current trait
+    const trait = G.charTraits[traitSelectedChar] ? TRAITS.find(t=>t.name===G.charTraits[traitSelectedChar]) : null;
+    const box = document.getElementById('trait-current-box');
+    if (trait) {
+      const rc = getTraitRarityClass(trait.rarity);
+      box.innerHTML = '<div><div class="trait-name-display ' + rc + '">' + trait.name + '</div><div class="trait-stat-display">' + getTraitStatText(trait) + '</div></div>';
+    } else {
+      box.innerHTML = '<div style="color:var(--text-dim);font-size:11px;">No trait yet.<br>Reroll to get one!</div>';
+    }
+    document.getElementById('trait-roll-cost-note').textContent = 'Costs 1 Trait Token';
+  } else {
+    btn.innerHTML = '<span id="trait-char-icon">＋</span>';
+    btn.className = 'trait-pick-btn';
+    label.textContent = 'Pick char';
+    document.getElementById('trait-current-box').innerHTML = '<div style="color:var(--text-dim);font-size:11px;">Select a character<br>to see their trait</div>';
+    document.getElementById('trait-roll-cost-note').textContent = 'Select a character first';
+  }
+}
+
+function openCharPicker() {
+  const grid = document.getElementById('trait-picker-grid');
+  grid.innerHTML = '';
+  if (!G.roster || G.roster.length === 0) {
+    grid.innerHTML = '<div style="color:var(--text-dim);font-size:12px;grid-column:span 3;text-align:center;padding:20px;">No characters owned yet.</div>';
+  } else {
+    G.roster.forEach(id => {
+      const def = CHAR_DEFS[id];
+      if (!def) return;
+      const card = document.createElement('div');
+      card.className = 'trait-picker-card' + (traitSelectedChar === id ? ' selected' : '');
+      const img = CHAR_IMAGES[id]
+        ? '<img src="' + CHAR_IMAGES[id] + '" style="width:44px;height:44px;border-radius:8px;object-fit:cover;object-position:top;">'
+        : '<span style="font-size:28px">' + def.emoji + '</span>';
+      const traitName = G.charTraits && G.charTraits[id] ? G.charTraits[id] : 'No trait';
+      card.innerHTML = img + '<div style="font-size:10px;color:var(--text-bright);font-weight:700;">' + def.name.split(' ')[0] + '</div><div style="font-size:9px;color:var(--text-dim);">' + traitName + '</div>';
+      card.onclick = () => { traitSelectedChar = id; closeCharPicker(); renderTraitMenu(); };
+      grid.appendChild(card);
+    });
+  }
+  document.getElementById('trait-char-picker').classList.add('show');
+}
+
+function closeCharPicker() {
+  document.getElementById('trait-char-picker').classList.remove('show');
+}
+
+function doTraitReroll() {
+  if (!traitSelectedChar) return;
+  if ((G.traitTokens || 0) < 1) { showTraitMsg('Not enough Trait Tokens!', true); return; }
+
+  // Check warn list
+  const currentTrait = G.charTraits && G.charTraits[traitSelectedChar];
+  if (currentTrait && G.traitWarnList && G.traitWarnList.includes(currentTrait)) {
+    if (!confirm('⚠️ Warning: You have the trait "' + currentTrait + '" which is in your filter list! Are you sure you want to reroll?')) return;
+  }
+
+  G.traitTokens = (G.traitTokens || 0) - 1;
+  const trait = rollTrait();
+  if (!G.charTraits) G.charTraits = {};
+  G.charTraits[traitSelectedChar] = trait.name;
+
+  updateTopBar();
+  saveGame();
+  renderTraitMenu();
+
+  // Toast
+  const rc = getTraitRarityClass(trait.rarity);
+  const def = CHAR_DEFS[traitSelectedChar];
+  const toast = document.createElement('div');
+  toast.style.cssText = 'position:fixed;top:70px;left:50%;transform:translateX(-50%);z-index:9999;background:rgba(10,15,35,0.97);border:1px solid var(--neon-purple);border-radius:12px;padding:14px 24px;text-align:center;animation:result-in 0.4s ease;pointer-events:none;';
+  toast.innerHTML = '<div style="font-size:11px;color:var(--text-dim)">' + def.emoji + ' ' + def.name + '</div><div style="font-size:18px;font-weight:900" class="' + rc + '">' + trait.name + '</div><div style="font-size:11px;color:var(--text-dim);margin-top:2px">' + getTraitStatText(trait) + '</div>';
+  document.body.appendChild(toast);
+  setTimeout(() => toast.remove(), 2400);
+}
+
+function convertGoldToTraits(amount) {
+  const cost = amount * 5000;
+  if ((G.gold || 0) < cost) { showTraitMsg('Not enough gold! Need ' + cost.toLocaleString() + ' 💰', true); return; }
+  G.gold -= cost;
+  G.traitTokens = (G.traitTokens || 0) + amount;
+  updateTopBar();
+  saveGame();
+  renderTraitMenu();
+  showTraitMsg('+' + amount + ' 🎭 Trait Tokens! (-' + cost.toLocaleString() + ' gold)', false);
+}
+
+function showTraitMsg(msg, isErr) {
+  const el = document.getElementById('trait-convert-msg');
+  if (!el) return;
+  el.textContent = msg;
+  el.style.color = isErr ? 'var(--neon-red)' : 'var(--neon-green)';
+  clearTimeout(el._t);
+  el._t = setTimeout(() => { el.textContent = ''; }, 3000);
+}
+
+function adminSaveTraits() {
+  const val = parseInt(document.getElementById('adm-traits').value) || 0;
+  G.traitTokens = val;
+  updateTopBar();
+  saveGame();
+  const el = document.getElementById('admin-trait-result');
+  if (el) { el.textContent = '✅ Trait Tokens set to ' + val; }
+}
+
+// Index
+function openTraitIndex() {
+  const list = document.getElementById('trait-index-list');
+  list.innerHTML = '';
+  TRAITS.forEach(t => {
+    const rc = getTraitRarityClass(t.rarity);
+    const card = document.createElement('div');
+    card.className = 'trait-index-card';
+    const rate = t.weight < 1 ? t.weight.toFixed(1) + '%' : t.weight + '%';
+    card.innerHTML = '<div class="trait-index-name ' + rc + '">' + t.name + '</div><div class="trait-index-stats">' + getTraitStatText(t) + '</div><div class="trait-index-rate">' + t.rarity.charAt(0).toUpperCase() + t.rarity.slice(1) + ' &nbsp;·&nbsp; ' + rate + ' chance</div>';
+    list.appendChild(card);
+  });
+  document.getElementById('trait-index-overlay').classList.add('show');
+}
+
+function closeTraitIndex() {
+  document.getElementById('trait-index-overlay').classList.remove('show');
+}
+
+// Filter
+function openTraitFilter() {
+  renderTraitFilter();
+  document.getElementById('trait-filter-overlay').classList.add('show');
+}
+
+function closeTraitFilter() {
+  document.getElementById('trait-filter-overlay').classList.remove('show');
+}
+
+function renderTraitFilter() {
+  if (!G.traitWarnList) G.traitWarnList = [];
+  const list = document.getElementById('trait-filter-list');
+  list.innerHTML = '';
+  TRAITS.forEach(t => {
+    const rc = getTraitRarityClass(t.rarity);
+    const isWarn = G.traitWarnList.includes(t.name);
+    const item = document.createElement('div');
+    item.className = 'trait-filter-item';
+    item.innerHTML = '<div><div class="' + rc + '" style="font-weight:700;font-size:13px">' + t.name + '</div><div style="font-size:10px;color:var(--text-dim)">' + getTraitStatText(t) + '</div></div><button class="warn-toggle' + (isWarn ? ' active' : '') + '" onclick="toggleTraitWarn(\'' + t.name + '\')">' + (isWarn ? '⚠️ Warned' : 'Off') + '</button>';
+    list.appendChild(item);
+  });
+}
+
+function toggleTraitWarn(name) {
+  if (!G.traitWarnList) G.traitWarnList = [];
+  const idx = G.traitWarnList.indexOf(name);
+  if (idx >= 0) G.traitWarnList.splice(idx, 1);
+  else G.traitWarnList.push(name);
+  saveGame();
+  renderTraitFilter();
+}
+
+// Apply trait bonuses to a unit's stats (called from createUnit)
+function getTraitStats(charId) {
+  if (!G.charTraits || !G.charTraits[charId]) return { atk:0, def:0, spd:0 };
+  const trait = TRAITS.find(t => t.name === G.charTraits[charId]);
+  if (!trait) return { atk:0, def:0, spd:0 };
+  return { atk: trait.atkBonus, def: trait.defBonus, spd: trait.spdBonus };
+}
+
+// ============================================================
+// TUTORIAL SYSTEM
+// ============================================================
+const TUTORIAL_STEPS = [
+  {
+    icon: '⚔️',
+    title: 'Welcome to Cursed Realm!',
+    body: `You're a jujutsu sorcerer fighting cursed spirits and powerful enemies.
+<span class="highlight">Your goal: Build a team of 3 characters, fight through Story Mode, and collect rare fighters via Summon.</span>
+This tutorial will walk you through everything you need to know. Let's go!`
+  },
+  {
+    icon: '👥',
+    title: 'Building Your Team',
+    body: `Head to <b>Team</b> from the main menu to set up your 3-character lineup.
+<span class="highlight">Tap any character in Your Roster to add them to your team. Tap a filled slot to remove someone.</span>
+<span class="tip">💡 Tip: Mix character roles — use a DPS attacker, a support, and a tank for the best results.</span>
+Your starter team is <b>Yuji, Megumi, and Nobara</b> — enough to begin!`
+  },
+  {
+    icon: '⚡',
+    title: 'How Battle & Energy Works',
+    body: `Battles are <b>turn-based</b>. Characters act in order of their <b>SPD</b> stat — fastest goes first.
+<span class="highlight">Each turn you pick a Skill to use. Skills cost Energy ⚡ — you start at 0 and gain it every turn.</span>
+• <b>Basic skills</b> cost 0–35 energy — use these to build up.
+• <b>Ultimate skills</b> cost 100 energy — massive damage or effects!
+<span class="tip">💡 Tip: Use support skills like Shoko's RCT to charge your whole team's energy faster, then unleash Ultimates!</span>`
+  },
+  {
+    icon: '📖',
+    title: 'Story Mode',
+    body: `<b>Story Mode</b> has Chapters with 20 Episodes each. Complete them in order to unlock more.
+<span class="highlight">Every 5th episode is a ★ Boss fight — harder but worth more gold rewards.</span>
+Winning battles earns <b>💰 Gold</b>, which you use to Summon new characters.
+<span class="tip">💡 Tip: Replay earlier episodes to grind gold if you're struggling. Gold carries over — there's no limit!</span>
+<b>Rush Mode</b> is similar but each fight is a single powerful boss — great for quick gold farming.`
+  },
+  {
+    icon: '☠️',
+    title: 'Cursed Fingers & Transformations',
+    body: `<b>Cursed Fingers</b> ☠️ drop from the <b>Sukuna Raid</b> (3% chance per raid clear).
+<span class="highlight">Collect 3 Cursed Fingers and Yuji Itadori will transform into <b style="color:#f44">Sukuna (Yuji)</b> automatically in battle — massively stronger!</span>
+Similarly, collect a <b>Blindfold 🩵</b> from the <b>Limitless Gojo Raid</b> (0.5% drop) to transform Teen Gojo into <b>Blindfold Gojo</b>.
+<span class="tip">💡 Tip: Raids rotate every 15 minutes. Check back often to fight whichever boss is currently active!</span>`
+  },
+  {
+    icon: '🎰',
+    title: 'Summon & Star Upgrades',
+    body: `Use <b>Gold</b> to pull new characters from the Summon screen (100💰 per pull).
+<span class="highlight">If you pull a character you already own, it becomes a <b>Duplicate</b> — saved automatically for Star Upgrades!</span>
+Go to <b>⭐ Upgrade</b> to spend duplicates + gold to star up your characters:
+<span class="highlight">★1 = 1 dup + 2.5k gold &nbsp;·&nbsp; ★7 = 7 dups + 150k gold</span>
+Each star permanently boosts that character's <b>ATK, DEF, and SPD</b> in every battle.
+<span class="tip">💡 Tip: Prison Realm 🔮 and Shop crates give exclusive characters not in the standard summon pool!</span>`
+  },
+];
+
+let tutStep = 0;
+
+function startTutorial(fromAdmin) {
+  tutStep = 0;
+  document.getElementById('tutorial-overlay').classList.add('show');
+  renderTutStep();
+  if (fromAdmin) {
+    const el = document.getElementById('admin-tutorial-result');
+    if (el) { el.textContent = '✅ Tutorial launched!'; }
+  }
+  // Mark as seen
+  localStorage.setItem('tut_seen', '1');
+}
+
+function closeTutorial() {
+  document.getElementById('tutorial-overlay').classList.remove('show');
+}
+
+function tutNav(dir) {
+  tutStep = Math.max(0, Math.min(TUTORIAL_STEPS.length - 1, tutStep + dir));
+  renderTutStep();
+}
+
+function renderTutStep() {
+  const step = TUTORIAL_STEPS[tutStep];
+  const total = TUTORIAL_STEPS.length;
+  const isLast = tutStep === total - 1;
+  const isFirst = tutStep === 0;
+
+  document.getElementById('tut-step-indicator').textContent = `Step ${tutStep + 1} of ${total}`;
+
+  // Dots
+  const dotsEl = document.getElementById('tut-progress');
+  dotsEl.innerHTML = '';
+  for (let i = 0; i < total; i++) {
+    const dot = document.createElement('div');
+    dot.className = 'tut-dot' + (i === tutStep ? ' active' : i < tutStep ? ' done' : '');
+    dotsEl.appendChild(dot);
+  }
+
+  // Content
+  document.getElementById('tut-content').innerHTML = `
+    <span class="tut-icon">${step.icon}</span>
+    <div class="tut-title">${step.title}</div>
+    <div class="tut-body">${step.body}</div>`;
+
+  // Nav buttons
+  const backBtn = document.getElementById('tut-back-btn');
+  const nextBtn = document.getElementById('tut-next-btn');
+  backBtn.style.display = isFirst ? 'none' : 'flex';
+  if (isLast) {
+    nextBtn.textContent = '✅ Got it! Let\'s Play';
+    nextBtn.onclick = closeTutorial;
+    nextBtn.className = 'btn btn-gold';
+  } else {
+    nextBtn.textContent = 'Next →';
+    nextBtn.onclick = () => tutNav(1);
+    nextBtn.className = 'btn btn-gold';
+  }
 }
 
 // ============================================================
@@ -1242,6 +2126,10 @@ function init() {
   renderInventory();
   saveGame();
   startBgCanvas();
+  // Auto-launch tutorial for first-time players
+  if (!localStorage.getItem('tut_seen')) {
+    setTimeout(() => startTutorial(false), 600);
+  }
 }
 
 // ============================================================
@@ -1253,6 +2141,8 @@ function updateTopBar() {
   document.getElementById('tb-pulls').textContent = G.pulls;
   document.getElementById('tb-sp').textContent = G.secretPity;
   document.getElementById('tb-bp').textContent = G.beyondPity;
+  const tbTraits = document.getElementById('tb-traits');
+  if (tbTraits) tbTraits.textContent = G.traitTokens || 0;
 }
 
 // ============================================================
@@ -1269,6 +2159,7 @@ function showScreen(name) {
   if (name === 'raid') renderRaid();
   if (name === 'summon') renderSummon();
   if (name === 'admin') renderAdmin();
+  if (name === 'upgrade') renderUpgradeScreen();
 }
 
 // ============================================================
@@ -1373,6 +2264,10 @@ function doSummon(count) {
     }
     if (result.charId && !G.roster.includes(result.charId)) {
       G.roster.push(result.charId);
+    } else if (result.charId && G.roster.includes(result.charId)) {
+      // Duplicate — store it
+      if (!G.charDups) G.charDups = {};
+      G.charDups[result.charId] = (G.charDups[result.charId] || 0) + 1;
     }
     lastResult = result;
   }
@@ -1388,11 +2283,14 @@ function renderSummonResult(r, count) {
   const summonImgHtml = r.charId && CHAR_IMAGES[r.charId]
     ? `<img src="${CHAR_IMAGES[r.charId]}" class="result-img" />`
     : `<div style="font-size:40px">${r.emoji}</div>`;
+  const isDup = r.charId && G.roster.includes(r.charId);
+  const dupHtml = isDup ? `<div style="font-size:11px;color:var(--neon-cyan);background:rgba(80,160,255,0.1);border:1px solid rgba(80,160,255,0.3);border-radius:6px;padding:3px 10px;">✦ DUPLICATE — stored for upgrade! (${getCharDups(r.charId)} total)</div>` : '';
   el.innerHTML = `
     <div class="result-flash">
       ${summonImgHtml}
       <div class="result-name ${rarityClass}">${r.name}</div>
       <div class="result-rarity ${rarityClass}">${r.rarity.toUpperCase()}</div>
+      ${dupHtml}
       ${count > 1 ? `<div style="font-size:11px;color:var(--text-dim);">Showing last of ${count} pulls</div>` : ''}
     </div>`;
 }
@@ -1439,9 +2337,9 @@ function renderTeam() {
     card.innerHTML = `
       ${rImg}
       <div class="roster-info">
-        <div class="roster-name r-${def.rarity.toLowerCase()}">${def.name}</div>
-        <div style="font-size:10px;color:var(--text-dim)">${def.rarity}</div>
-        <div class="roster-stats">ATK:${def.atk} DEF:${def.def} SPD:${def.spd}</div>
+        <div class="roster-name r-${def.rarity.toLowerCase()}">${def.name}${getCharDups(id) > 0 ? ` <span class="dup-count-tag">x${getCharDups(id)}</span>` : ''}</div>
+        <div style="font-size:10px;color:var(--text-dim);display:flex;align-items:center;gap:5px;">${def.rarity}${getCharStars(id) > 0 ? ` <span class="star-badge ${getStarClass(getCharStars(id))}">${getStarLabel(getCharStars(id))}</span>` : ''}</div>
+        <div class="roster-stats">ATK:${getStarStats(id)?.atk||def.atk} DEF:${getStarStats(id)?.def||def.def} SPD:${getStarStats(id)?.spd||def.spd}</div>
         ${inTeam ? '<div style="color:var(--neon-gold);font-size:10px">✓ In Team</div>' : ''}
       </div>`;
     if (!inTeam) card.onclick = () => addToTeam(id);
@@ -1512,7 +2410,12 @@ function openPrisonRealm(count) {
   const results = [];
   for (let i = 0; i < count; i++) {
     const char = rollPrisonChar();
-    if (!G.roster.includes(char.id)) G.roster.push(char.id);
+    if (!G.roster.includes(char.id)) {
+      G.roster.push(char.id);
+    } else {
+      if (!G.charDups) G.charDups = {};
+      G.charDups[char.id] = (G.charDups[char.id] || 0) + 1;
+    }
     results.push(char);
   }
 
@@ -1761,7 +2664,12 @@ function buyCrate(type) {
     const r = Math.random()*100;
     char = r < 80 ? CHAR_DEFS['naoya'] : r < 99 ? CHAR_DEFS['jane'] : CHAR_DEFS['maki'];
   }
-  if (!G.roster.includes(char.id)) G.roster.push(char.id);
+  if (!G.roster.includes(char.id)) {
+    G.roster.push(char.id);
+  } else {
+    if (!G.charDups) G.charDups = {};
+    G.charDups[char.id] = (G.charDups[char.id] || 0) + 1;
+  }
   const el = document.getElementById('shop-result');
   el.innerHTML = `<div class="result-flash"><span style="font-size:30px">${char.emoji}</span><br><span class="r-${char.rarity.toLowerCase()}" style="font-weight:700">${char.name}</span><br><span class="badge">${char.rarity}</span></div>`;
   updateTopBar();
@@ -1796,6 +2704,8 @@ function showAdminContent() {
   document.getElementById('adm-pr').value = G.prisonRealms;
   document.getElementById('adm-cf').value = G.cursedFingers;
   document.getElementById('adm-bf').value = G.blindfolds||0;
+  const admTraits = document.getElementById('adm-traits');
+  if (admTraits) admTraits.value = G.traitTokens || 0;
   // Populate character dropdown
   const sel = document.getElementById('adm-char-select');
   sel.innerHTML = '<option value="">— Select Character —</option>';
@@ -1828,8 +2738,11 @@ function adminGiveChar() {
   const def = CHAR_DEFS[id];
   if (!def) return;
   if (G.roster.includes(id)) {
-    el.innerHTML = `⚠️ Already own ${def.emoji} <span class="r-${def.rarity.toLowerCase()}">${def.name}</span>`;
-    el.style.color = 'var(--neon-gold)';
+    // Give as duplicate instead
+    if (!G.charDups) G.charDups = {};
+    G.charDups[id] = (G.charDups[id] || 0) + 1;
+    el.innerHTML = `✅ Already owned — added 1 duplicate for ${def.emoji} <span class="r-${def.rarity.toLowerCase()}">${def.name}</span> (${G.charDups[id]} dups)`;
+    el.style.color = 'var(--neon-cyan)';
   } else {
     G.roster.push(id);
     el.innerHTML = `✅ Added ${def.emoji} <span class="r-${def.rarity.toLowerCase()}">${def.name}</span> to roster!`;
@@ -1845,6 +2758,7 @@ function adminResetAll() {
   if (!confirm('Last chance — this cannot be undone. Reset everything?')) return;
   localStorage.removeItem('cursed_realm_save');
   localStorage.removeItem('last_login');
+  localStorage.removeItem('tut_seen');
   G.gold = 500;
   G.pulls = 0;
   G.secretPity = 0;
@@ -1854,6 +2768,12 @@ function adminResetAll() {
   G.blindfolds = 0;
   G.team = ['yuji','megumi','nobara'];
   G.roster = ['yuji','megumi','nobara'];
+  G.charStars = {};
+  G.charDups = {};
+  G.traitTokens = 0;
+  G.charTraits = {};
+  G.traitPity = { dragonborn:0, framed:0, above:0, slayer:0, beyond:0 };
+  G.traitWarnList = [];
   G.storyChapter = 1;
   G.storyEpisode = 1;
   G.storyChapterView = 1;
@@ -1903,11 +2823,116 @@ function adminGiveCrate(type) {
     const r = Math.random()*100;
     char = r < 80 ? CHAR_DEFS['naoya'] : r < 99 ? CHAR_DEFS['jane'] : CHAR_DEFS['maki'];
   }
-  if (!G.roster.includes(char.id)) G.roster.push(char.id);
+  if (!G.roster.includes(char.id)) {
+    G.roster.push(char.id);
+  } else {
+    if (!G.charDups) G.charDups = {};
+    G.charDups[char.id] = (G.charDups[char.id] || 0) + 1;
+  }
   const el = document.getElementById('admin-crate-result');
   el.innerHTML = `✅ Got: ${char.emoji} <span class="r-${char.rarity.toLowerCase()}">${char.name}</span> (${char.rarity})`;
   updateTopBar();
   saveGame();
+}
+
+// ============================================================
+// STAR UPGRADE SCREEN
+// ============================================================
+function renderUpgradeScreen() {
+  if (!G.charStars) G.charStars = {};
+  if (!G.charDups) G.charDups = {};
+  const container = document.getElementById('upgrade-roster-list');
+  container.innerHTML = '';
+
+  if (G.roster.length === 0) {
+    container.innerHTML = '<div style="text-align:center;color:var(--text-dim);padding:30px">No characters owned yet.</div>';
+    return;
+  }
+
+  G.roster.forEach(charId => {
+    const def = CHAR_DEFS[charId];
+    if (!def) return;
+    const stars = getCharStars(charId);
+    const dups = getCharDups(charId);
+    const stats = getStarStats(charId);
+    const maxStars = 7;
+    const atMaxStar = stars >= maxStars;
+    const nextReq = atMaxStar ? null : STAR_REQS[stars + 1];
+    const canAffordDups = nextReq && dups >= nextReq.dups;
+    const canAffordGold = nextReq && G.gold >= nextReq.gold;
+    const canUpgrade = nextReq && canAffordDups && canAffordGold;
+
+    const starLabel = stars > 0 ? `<span class="star-badge ${getStarClass(stars)}">${getStarLabel(stars)}</span>` : '<span style="color:var(--text-dim);font-size:11px">No Stars</span>';
+    const dupTag = dups > 0 ? `<span class="dup-count-tag">x${dups} dups</span>` : '';
+
+    const imgHtml = CHAR_IMAGES[charId]
+      ? `<img src="${CHAR_IMAGES[charId]}" class="uc-img" />`
+      : `<span class="uc-emoji">${def.emoji}</span>`;
+
+    const card = document.createElement('div');
+    card.className = 'upgrade-char-card';
+
+    let nextStarHtml = '';
+    if (atMaxStar) {
+      nextStarHtml = `<div style="color:var(--neon-gold);font-size:12px;font-weight:700;margin-top:8px;">✨ MAX STARS REACHED</div>`;
+    } else {
+      nextStarHtml = `
+        <div class="star-req-box" style="margin-top:10px">
+          <div class="star-req-title">UPGRADE TO ★${stars + 1}</div>
+          <div class="star-req-row">
+            <span class="label">Duplicates needed</span>
+            <span class="val ${canAffordDups ? 'ok' : 'bad'}">${dups}/${nextReq.dups} dups</span>
+          </div>
+          <div class="star-req-row">
+            <span class="label">Gold needed</span>
+            <span class="val ${canAffordGold ? 'ok' : 'bad'}">${G.gold.toLocaleString()}/${nextReq.gold.toLocaleString()} 💰</span>
+          </div>
+          <button class="btn ${canUpgrade ? 'btn-gold' : 'btn-primary'} btn-full btn-sm" style="margin-top:8px;"
+            onclick="doStarUpgrade('${charId}')" ${canUpgrade ? '' : 'disabled'}>
+            ${canUpgrade ? `⭐ UPGRADE TO ★${stars+1}` : `⭐ Need ${Math.max(0,nextReq.dups-dups)} more dups + ${Math.max(0,nextReq.gold-G.gold).toLocaleString()} gold`}
+          </button>
+        </div>`;
+    }
+
+    card.innerHTML = `
+      ${imgHtml}
+      <div class="upgrade-info">
+        <div class="upgrade-name r-${def.rarity.toLowerCase()}">${def.name} ${dupTag}</div>
+        <div style="font-size:11px;color:var(--text-dim);margin-bottom:4px;">${def.rarity} &nbsp; ${starLabel}</div>
+        <div class="upgrade-stat-row">ATK <span>${stats.atk}</span> &nbsp; DEF <span>${stats.def}</span> &nbsp; SPD <span>${stats.spd}</span> &nbsp; HP <span>${stats.hp}</span></div>
+        ${stars > 0 ? `<div style="font-size:10px;color:var(--neon-green);margin-top:2px;">Boosted from base: ATK ${def.atk} → ${stats.atk} | DEF ${def.def} → ${stats.def} | SPD ${def.spd} → ${stats.spd}</div>` : ''}
+        ${nextStarHtml}
+      </div>`;
+    container.appendChild(card);
+  });
+}
+
+function doStarUpgrade(charId) {
+  if (!G.charStars) G.charStars = {};
+  if (!G.charDups) G.charDups = {};
+  const stars = getCharStars(charId);
+  if (stars >= 7) { alert('Already at max stars!'); return; }
+  const req = STAR_REQS[stars + 1];
+  const dups = getCharDups(charId);
+  if (dups < req.dups) { alert(`Need ${req.dups} duplicates! You have ${dups}.`); return; }
+  if (G.gold < req.gold) { alert(`Need ${req.gold} gold! You have ${G.gold}.`); return; }
+
+  G.charDups[charId] = dups - req.dups;
+  G.gold -= req.gold;
+  G.charStars[charId] = stars + 1;
+
+  updateTopBar();
+  saveGame();
+  renderUpgradeScreen();
+
+  // Flash effect
+  const newStars = G.charStars[charId];
+  const def = CHAR_DEFS[charId];
+  const toast = document.createElement('div');
+  toast.style.cssText = 'position:fixed;top:70px;left:50%;transform:translateX(-50%);z-index:9999;background:rgba(10,15,35,0.97);border:1px solid var(--neon-gold);border-radius:12px;padding:14px 24px;text-align:center;animation:result-in 0.4s ease;';
+  toast.innerHTML = `<div style="font-size:20px;color:var(--neon-gold);font-weight:900;font-family:\'Orbitron\',sans-serif;">⭐ STAR UP!</div><div style="font-size:14px;margin-top:4px;color:var(--text-bright)">${def.emoji} ${def.name}</div><div style="font-size:18px;color:var(--neon-gold);text-shadow:0 0 12px var(--neon-gold);">${'★'.repeat(newStars)}</div>`;
+  document.body.appendChild(toast);
+  setTimeout(() => toast.remove(), 2200);
 }
 
 // ============================================================
@@ -1932,9 +2957,9 @@ function createUnit(def, isPlayer) {
     isPlayer,
     maxHp: d.hp,
     hp: d.hp,
-    atk: d.atk,
-    def: d.def,
-    spd: d.spd,
+    atk: isPlayer ? (getStarStats(d.id)?.atk || d.atk) + getTraitStats(d.id).atk : d.atk,
+    def: isPlayer ? (getStarStats(d.id)?.def || d.def) + getTraitStats(d.id).def : d.def,
+    spd: isPlayer ? (getStarStats(d.id)?.spd || d.spd) + getTraitStats(d.id).spd : d.spd,
     energy: 0,
     skills: d.skills,
     status: [], // {type, turns}
@@ -2143,6 +3168,7 @@ function showSkillPanel(unit) {
 }
 
 function selectSkill(unit, skill, idx) {
+  if (actionOnCooldown) return;
   pendingSkill = {unit, skill, idx};
   const needsTarget = skill.type === 'atk' || skill.type === 'ult';
   if (needsTarget) {
@@ -2186,7 +3212,44 @@ function calcDamage(attacker, defender, power, defIgnore) {
   return finalDmg;
 }
 
+let actionOnCooldown = false;
+
+function lockActionButtons(ms) {
+  actionOnCooldown = true;
+  const allBtns = document.querySelectorAll('.skill-btn, .target-btn');
+  allBtns.forEach(b => { b.disabled = true; b.style.opacity = '0.4'; b.style.pointerEvents = 'none'; });
+
+  // Show countdown
+  const panel = document.getElementById('skill-section');
+  let existing = document.getElementById('action-cd-msg');
+  if (existing) existing.remove();
+  const msg = document.createElement('div');
+  msg.id = 'action-cd-msg';
+  msg.style.cssText = 'text-align:center;font-size:12px;color:var(--neon-purple);padding:4px 0;letter-spacing:1px;';
+  panel.insertBefore(msg, panel.firstChild);
+
+  let remaining = Math.ceil(ms / 1000);
+  msg.textContent = `⏳ Next action in ${remaining}s…`;
+  const tick = setInterval(() => {
+    remaining--;
+    if (remaining > 0) {
+      msg.textContent = `⏳ Next action in ${remaining}s…`;
+    } else {
+      clearInterval(tick);
+    }
+  }, 1000);
+
+  setTimeout(() => {
+    actionOnCooldown = false;
+    msg.remove();
+    // Re-enable buttons naturally — processTurn will redraw skill panel on next turn
+    const btns = document.querySelectorAll('.skill-btn, .target-btn');
+    btns.forEach(b => { b.disabled = false; b.style.opacity = ''; b.style.pointerEvents = ''; });
+  }, ms);
+}
+
 function executeSkill(unit, skill, target) {
+  if (actionOnCooldown) return;
   if (unit.energy < skill.cost) return;
   unit.energy -= skill.cost;
   if (skill.cost === 0) unit.energy = Math.min(100, unit.energy + 10);
@@ -2287,6 +3350,7 @@ function executeSkill(unit, skill, target) {
   renderBattleUI();
 
   if (checkBattleEnd()) return;
+  lockActionButtons(3000);
   advanceTurn();
   setTimeout(processTurn, 700);
 }
